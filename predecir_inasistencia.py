@@ -2,9 +2,7 @@ import joblib
 import pandas as pd
 
 # cargar modelo entrenado
-modelo = joblib.load(
-    r"C:\Users\LUISA\Downloads\MachineLearning\modelo_random_forest_inasistencias.pkl"
-)
+modelo = joblib.load("modelo_random_forest_inasistencias.pkl")
 
 # datos del paciente
 nueva_cita = pd.DataFrame([{
