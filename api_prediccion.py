@@ -2,12 +2,28 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 import pandas as pd
 import joblib
+import os
 
 app = FastAPI()
 
-modelo = joblib.load(
+# Cargar modelo
+
+modelo_path = os.path.join(
+    os.path.dirname(__file__),
     "modelo_random_forest_inasistencias.pkl"
 )
+
+modelo = joblib.load(modelo_path)
+
+# Ruta principal
+
+@app.get("/")
+def inicio():
+    return {
+        "mensaje": "API de predicción activa"
+    }
+
+# Estructura de datos de entrada
 
 class PrediccionRequest(BaseModel):
     edad: int
@@ -19,6 +35,7 @@ class PrediccionRequest(BaseModel):
     antecedentes_inasistencias: int
     cantidad_citas_previas: int
 
+# Endpoint de predicción
 
 @app.post("/predict")
 def predict(data: PrediccionRequest):
